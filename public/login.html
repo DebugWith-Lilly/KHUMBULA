@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khumbula | Login</title>
+    <title>KHUMBULA | Login</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,6 @@
             overflow: hidden;
         }
 
-        /* Decorative shapes */
         .decoration {
             position: absolute;
             width: 150px;
@@ -57,7 +56,6 @@
             background: #85865B;
         }
 
-        /* Login card */
         .login-card {
             width: 100%;
             max-width: 450px;
@@ -75,6 +73,14 @@
             margin-bottom: 28px;
         }
 
+        .brand-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 18px;
+        }
+
         .brand h1 {
             font-family: 'Playfair Display', serif;
             color: #75452F;
@@ -86,6 +92,7 @@
         .brand p {
             font-size: 0.87rem;
             color: #806B53;
+            line-height: 1.6;
         }
 
         .login-form {
@@ -129,7 +136,6 @@
             color: #B5A397;
         }
 
-        /* Password */
         .password-wrapper {
             display: flex;
             gap: 8px;
@@ -157,7 +163,6 @@
             background: #EAD5C3;
         }
 
-        /* Language selection */
         .language-section {
             display: flex;
             flex-direction: column;
@@ -232,6 +237,7 @@
             font-size: 0.7rem;
             color: #927A68;
             text-align: center;
+            line-height: 1.5;
         }
 
         .language-check {
@@ -266,7 +272,6 @@
             text-decoration: underline;
         }
 
-        /* Login button */
         .primary-btn {
             width: 100%;
             border: none;
@@ -316,6 +321,11 @@
             .language-option {
                 padding: 13px 7px;
             }
+
+            .brand-logo {
+                width: 75px;
+                height: 75px;
+            }
         }
     </style>
 </head>
@@ -329,15 +339,24 @@
         <section class="login-card">
 
             <header class="brand">
-                <h1>Welcome Back</h1>
-                <p>A little help remembering, a little more freedom living.</p>
+                <img
+                    src="assets/logo.jpeg"
+                    alt="KHUMBULA logo"
+                    class="brand-logo">
+
+                <h1 data-translate="welcome">It's lovely to have you back</h1>
+
+                <p data-translate="slogan">
+                    A little help remembering, a little more freedom living.
+                </p>
             </header>
 
             <form class="login-form" id="login-form">
 
-                <!-- Email -->
                 <div class="input-group">
-                    <label for="email">Email address</label>
+                    <label for="email" data-translate="emailLabel">
+                        Your email address
+                    </label>
 
                     <input
                         type="email"
@@ -348,9 +367,10 @@
                         required>
                 </div>
 
-                <!-- Password -->
                 <div class="input-group">
-                    <label for="password">Password</label>
+                    <label for="password" data-translate="passwordLabel">
+                        Your password
+                    </label>
 
                     <div class="password-wrapper">
                         <input
@@ -371,14 +391,14 @@
                     </div>
                 </div>
 
-                <!-- Language selection -->
                 <div class="language-section">
 
-                    <span class="section-label">Choose your language</span>
+                    <span class="section-label" data-translate="languageLabel">
+                        Choose the language that feels right
+                    </span>
 
                     <div class="language-options">
 
-                        <!-- English -->
                         <button
                             type="button"
                             class="language-option selected"
@@ -395,10 +415,11 @@
                             </span>
 
                             <span class="language-name">English</span>
-                            <span class="language-description">Continue in English</span>
+                            <span class="language-description">
+                                A familiar way to continue
+                            </span>
                         </button>
 
-                        <!-- IsiZulu -->
                         <button
                             type="button"
                             class="language-option"
@@ -416,7 +437,9 @@
                             </span>
 
                             <span class="language-name">IsiZulu</span>
-                            <span class="language-description">Qhubeka ngesiZulu</span>
+                            <span class="language-description">
+                                Qhubeka ngesiZulu
+                            </span>
                         </button>
 
                     </div>
@@ -426,15 +449,16 @@
                         id="selected-language"
                         name="language"
                         value="en">
-
                 </div>
 
-                <!-- Forgot password -->
-                <a href="#" class="forgot-password" id="forgot-password">
-                    Forgot Password?
+                <a
+                    href="#"
+                    class="forgot-password"
+                    id="forgot-password"
+                    data-translate="forgot">
+                    Need help signing in?
                 </a>
 
-                <!-- Login message -->
                 <p
                     id="login-message"
                     class="message"
@@ -442,12 +466,12 @@
                     aria-live="polite">
                 </p>
 
-                <!-- Login -->
                 <button
                     type="submit"
                     class="primary-btn"
-                    id="login-button">
-                    Log In
+                    id="login-button"
+                    data-translate="loginButton">
+                    Welcome back
                 </button>
 
             </form>
@@ -455,27 +479,75 @@
     </main>
 
     <script>
-        // Show / hide password
+        const translations = {
+            en: {
+                welcome: "It's lovely to have you back",
+                slogan: "A little help remembering, a little more freedom living.",
+                emailLabel: "Your email address",
+                emailPlaceholder: "Enter your email",
+                passwordLabel: "Your password",
+                passwordPlaceholder: "Enter your password",
+                languageLabel: "Choose the language that feels right",
+                forgot: "Need help signing in?",
+                loginButton: "Welcome back",
+                showPassword: "Show",
+                hidePassword: "Hide",
+                showPasswordLabel: "Show password",
+                hidePasswordLabel: "Hide password"
+            },
+
+            zu: {
+                welcome: "Siyakujabulela ukukubona futhi",
+                slogan: "Usizo oluncane lokukhumbula, inkululeko eyengeziwe yokuphila.",
+                emailLabel: "Ikheli lakho le-imeyili",
+                emailPlaceholder: "Faka i-imeyili yakho",
+                passwordLabel: "Iphasiwedi yakho",
+                passwordPlaceholder: "Faka iphasiwedi yakho",
+                languageLabel: "Khetha ulimi olukhululekile kuwe",
+                forgot: "Udinga usizo lokungena?",
+                loginButton: "Siyakwamukela futhi",
+                showPassword: "Bonisa",
+                hidePassword: "Fihla",
+                showPasswordLabel: "Bonisa iphasiwedi",
+                hidePasswordLabel: "Fihla iphasiwedi"
+            }
+        };
+
+        const languageOptions = document.querySelectorAll(".language-option");
+        const selectedLanguage = document.getElementById("selected-language");
+        const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
         const togglePassword = document.getElementById("togglePassword");
 
-        togglePassword.addEventListener("click", () => {
-            const isPassword = passwordInput.type === "password";
+        function updateLanguage(language) {
+            const text = translations[language] || translations.en;
 
-            passwordInput.type = isPassword ? "text" : "password";
-            togglePassword.textContent = isPassword ? "Hide" : "Show";
-            togglePassword.setAttribute(
-                "aria-label",
-                isPassword ? "Hide password" : "Show password"
-            );
-        });
+            document.documentElement.lang = language === "zu" ? "zu" : "en";
 
-        // Language selection
-        const languageOptions = document.querySelectorAll(".language-option");
-        const selectedLanguage = document.getElementById("selected-language");
+            document.querySelectorAll("[data-translate]").forEach(element => {
+                const key = element.dataset.translate;
+
+                if (text[key]) {
+                    element.textContent = text[key];
+                }
+            });
+
+            emailInput.placeholder = text.emailPlaceholder;
+            passwordInput.placeholder = text.passwordPlaceholder;
+
+            if (passwordInput.type === "password") {
+                togglePassword.textContent = text.showPassword;
+                togglePassword.setAttribute("aria-label", text.showPasswordLabel);
+            } else {
+                togglePassword.textContent = text.hidePassword;
+                togglePassword.setAttribute("aria-label", text.hidePasswordLabel);
+            }
+        }
 
         languageOptions.forEach(option => {
             option.addEventListener("click", () => {
+                const language = option.dataset.language;
+
                 languageOptions.forEach(item => {
                     item.classList.remove("selected");
                     item.setAttribute("aria-pressed", "false");
@@ -484,11 +556,32 @@
                 option.classList.add("selected");
                 option.setAttribute("aria-pressed", "true");
 
-                selectedLanguage.value = option.dataset.language;
+                selectedLanguage.value = language;
+
+                updateLanguage(language);
             });
         });
+
+        togglePassword.addEventListener("click", () => {
+            const language = selectedLanguage.value;
+            const text = translations[language] || translations.en;
+            const isPassword = passwordInput.type === "password";
+
+            passwordInput.type = isPassword ? "text" : "password";
+
+            togglePassword.textContent = isPassword
+                ? text.hidePassword
+                : text.showPassword;
+
+            togglePassword.setAttribute(
+                "aria-label",
+                isPassword ? text.hidePasswordLabel : text.showPasswordLabel
+            );
+        });
+
+        updateLanguage("en");
     </script>
 
-    <script type="module" src="script.js"></script>
+<script type="module" src="auth.js"></script>
 </body>
 </html>
