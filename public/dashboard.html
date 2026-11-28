@@ -1,0 +1,894 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHUMBULA | Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F7EBDD;
+            --background: #F8EDE1;
+            --card: #FFF8EF;
+            --terracotta: #C77B4D;
+            --terracotta-dark: #AD653F;
+            --caramel: #D08A5C;
+            --brown: #654331;
+            --dark-brown: #493126;
+            --olive: #85845B;
+            --olive-dark: #6F704B;
+            --sage: #DCE0CA;
+            --peach: #F1D8C5;
+            --gold: #E9D7B5;
+            --text: #49382D;
+            --muted: #897565;
+            --border: #EBD9C8;
+            --deep-green: #294832;
+            --deep-green-light: #36583B;
+            --shadow: 0 8px 25px rgba(104, 68, 45, 0.08);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* CORNER DECORATIONS */
+
+        .corner-tl,
+        .corner-bl,
+        .corner-br {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .corner-tl {
+            top: 0;
+            left: 0;
+            width: 130px;
+            height: 130px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Cpath fill='%23C77B4D' d='M0 0h90C40 0 0 40 0 90z'/%3E%3Cpath fill='none' stroke='%23FFF8EF' stroke-width='3' stroke-linecap='round' d='M15 15l25 25M25 10l20 20M35 5l15 15'/%3E%3C/svg%3E");
+        }
+
+        .corner-bl {
+            bottom: 0;
+            left: 0;
+            width: 140px;
+            height: 140px;
+            background-position: bottom left;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Cpath fill='%2385845B' d='M0 160V80c30 0 60 20 60 50s-30 30-60 30z'/%3E%3Cpath fill='%236F704B' d='M20 160v-50c20 0 40 10 40 30s-20 20-40 20z'/%3E%3Cpath fill='%23C77B4D' d='M40 110c15-20 40-20 50-5-10 15-35 15-50 5z'/%3E%3C/svg%3E");
+        }
+
+        .corner-br {
+            bottom: 0;
+            right: 0;
+            width: 180px;
+            height: 180px;
+            background-position: bottom right;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath fill='%23C77B4D' d='M200 200H80c0-66 54-120 120-120z'/%3E%3Cpath fill='%2385845B' d='M200 200h-50c0-40 30-70 70-70z'/%3E%3Cpath fill='none' stroke='%23FFF8EF' stroke-width='4' d='M140 200l60-60M120 200l80-80M160 200l40-40'/%3E%3C/svg%3E");
+        }
+
+        /* MAIN DASHBOARD */
+
+        .dashboard-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1500px;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 38px clamp(22px, 5vw, 75px) 145px;
+        }
+
+        .dashboard-content {
+            width: 100%;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 34px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 62px;
+            height: 62px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #E8C9AD;
+            border: 2px solid var(--card);
+            box-shadow: 0 3px 12px rgba(101, 67, 49, 0.12);
+            color: var(--brown);
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .greeting span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+
+        .greeting h1 {
+            font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--dark-brown);
+        }
+
+        .greeting h1 .heart {
+            color: var(--terracotta);
+        }
+
+        .date-text {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* NOTIFICATION BELL */
+
+        .notification-button {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            background: var(--card);
+            color: var(--deep-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow: 0 3px 10px rgba(101, 67, 49, 0.05);
+        }
+
+        .notification-button:hover {
+            transform: translateY(-2px);
+            background: #F3E1CE;
+        }
+
+        .notification-button svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--deep-green);
+        }
+
+        /* MEMORY ASSISTANT BANNER */
+
+        .assistant-banner {
+            width: 100%;
+            min-height: 185px;
+            padding: 30px 36px;
+            margin-bottom: 25px;
+            border-radius: 25px;
+            background: linear-gradient(115deg, #C47A4E, #D18A5C);
+            color: #FFF8EF;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 22px rgba(175, 103, 62, 0.19);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .assistant-banner::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 50%;
+            right: 12%;
+            top: -150px;
+        }
+
+        .assistant-banner::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 50%;
+            right: 5%;
+            bottom: -145px;
+        }
+
+        .assistant-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(175, 103, 62, 0.25);
+        }
+
+        .assistant-left {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .assistant-icon {
+            width: 76px;
+            height: 76px;
+            flex-shrink: 0;
+            border-radius: 22px;
+            background: rgba(255, 248, 239, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .assistant-icon svg {
+            width: 42px;
+            height: 42px;
+            stroke: #FFF8EF;
+        }
+
+        .assistant-text h2 {
+            font-size: clamp(1.15rem, 2vw, 1.5rem);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .assistant-text p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.92);
+        }
+
+        .assistant-arrow {
+            position: relative;
+            z-index: 1;
+            font-size: 1.7rem;
+            opacity: 0.85;
+        }
+
+        /* FEATURE SECTION */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 32px 0 17px;
+        }
+
+        .section-heading h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--brown);
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        /* FEATURE CARDS */
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .feature-card {
+            min-height: 175px;
+            padding: 22px;
+            border-radius: 23px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            text-decoration: none;
+            color: var(--text);
+            overflow: hidden;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(235, 217, 200, 0.75);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(104, 68, 45, 0.13);
+        }
+
+        .people-card { background: #FFF7ED; }
+        .day-card { background: #F5F0E3; }
+        .memories-card { background: #F9EBDD; }
+        .support-card { background: #F4E8E3; }
+
+        .feature-icon {
+            width: 49px;
+            height: 49px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 17px;
+        }
+
+        .people-card .feature-icon,
+        .day-card .feature-icon,
+        .memories-card .feature-icon,
+        .support-card .feature-icon {
+            background: #E5E8D9;
+            color: var(--deep-green);
+        }
+
+        .feature-icon svg {
+            width: 25px;
+            height: 25px;
+            stroke: var(--deep-green);
+        }
+
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 5px;
+            color: var(--dark-brown);
+        }
+
+        .feature-card p {
+            font-size: 0.78rem;
+            line-height: 1.5;
+            color: var(--muted);
+            max-width: 260px;
+        }
+
+        .card-arrow {
+            position: absolute;
+            right: 20px;
+            bottom: 21px;
+            font-size: 1.15rem;
+            color: var(--terracotta);
+            opacity: 0.7;
+        }
+
+        /* BOTTOM NAVIGATION */
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(520px, calc(100% - 36px));
+            min-height: 82px;
+            padding: 12px 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            justify-items: center;
+            background: rgba(255, 248, 239, 0.97);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            box-shadow: 0 10px 35px rgba(101, 67, 49, 0.14);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-decoration: none;
+            color: #9A8878;
+            font-size: 0.72rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--deep-green);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--deep-green);
+            font-weight: 700;
+        }
+
+        .nav-item:hover svg {
+            transform: translateY(-2px);
+        }
+
+        /* LOCATION BUTTON */
+
+        .location-nav {
+            position: relative;
+            align-self: center;
+            justify-self: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: var(--deep-green);
+            font-size: 0.72rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .location-button {
+            width: 66px;
+            height: 66px;
+            margin-top: -42px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #D18A5C, #B96D45);
+            border: 5px solid var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 6px 18px rgba(175, 103, 62, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .location-button svg {
+            width: 27px;
+            height: 27px;
+            stroke: white;
+        }
+
+        .location-nav:hover .location-button {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 22px rgba(175, 103, 62, 0.4);
+        }
+
+        .location-label {
+            margin-top: -2px;
+        }
+
+        /* DESKTOP */
+
+        @media (min-width: 900px) {
+            .dashboard-container { padding-top: 55px; }
+            .header { margin-bottom: 42px; }
+
+            .assistant-banner {
+                min-height: 205px;
+                padding: 38px 45px;
+                margin-bottom: 35px;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 22px;
+            }
+
+            .feature-card {
+                min-height: 220px;
+                padding: 25px;
+            }
+
+            .feature-card h3 { font-size: 1.1rem; }
+            .feature-card p { font-size: 0.82rem; }
+            .section-heading { margin-top: 38px; }
+
+            .bottom-nav {
+                width: 460px;
+                min-height: 88px;
+                bottom: 30px;
+            }
+
+            .location-button {
+                width: 72px;
+                height: 72px;
+                margin-top: -48px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .dashboard-container { padding-top: 65px; }
+
+            .feature-card {
+                min-height: 235px;
+                padding: 28px;
+            }
+
+            .assistant-banner { min-height: 220px; }
+
+            .assistant-icon {
+                width: 86px;
+                height: 86px;
+            }
+        }
+
+        /* TABLET */
+
+        @media (max-width: 768px) {
+            .dashboard-container { padding: 28px 22px 135px; }
+            .header { margin-bottom: 27px; }
+
+            .assistant-banner {
+                min-height: 155px;
+                padding: 25px;
+            }
+
+            .assistant-icon {
+                width: 64px;
+                height: 64px;
+            }
+
+            .feature-grid { gap: 14px; }
+
+            .feature-card {
+                min-height: 165px;
+                padding: 18px;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 480px) {
+            .dashboard-container { padding: 24px 16px 135px; }
+
+            .corner-tl {
+                width: 85px;
+                height: 85px;
+            }
+
+            .corner-bl {
+                width: 95px;
+                height: 95px;
+            }
+
+            .corner-br {
+                width: 110px;
+                height: 110px;
+            }
+
+            .avatar {
+                width: 49px;
+                height: 49px;
+                font-size: 0.95rem;
+            }
+
+            .profile { gap: 11px; }
+            .greeting h1 { font-size: 1.1rem; }
+            .greeting span { font-size: 0.78rem; }
+            .date-text { font-size: 0.68rem; }
+
+            .notification-button {
+                width: 42px;
+                height: 42px;
+            }
+
+            .notification-button svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .assistant-banner {
+                min-height: 145px;
+                padding: 20px;
+                border-radius: 20px;
+                margin-bottom: 22px;
+            }
+
+            .assistant-left { gap: 14px; }
+
+            .assistant-icon {
+                width: 54px;
+                height: 54px;
+                border-radius: 16px;
+            }
+
+            .assistant-icon svg {
+                width: 30px;
+                height: 30px;
+            }
+
+            .assistant-text h2 { font-size: 1rem; }
+            .assistant-text p { font-size: 0.72rem; }
+            .assistant-arrow { font-size: 1.2rem; }
+
+            .section-heading { margin: 25px 0 14px; }
+            .section-heading h2 { font-size: 1rem; }
+            .feature-grid { gap: 11px; }
+
+            .feature-card {
+                min-height: 145px;
+                padding: 15px;
+                border-radius: 19px;
+            }
+
+            .feature-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                margin-bottom: 12px;
+            }
+
+            .feature-icon svg {
+                width: 21px;
+                height: 21px;
+            }
+
+            .feature-card h3 { font-size: 0.88rem; }
+            .feature-card p { font-size: 0.68rem; }
+
+            .card-arrow {
+                right: 13px;
+                bottom: 13px;
+                font-size: 0.9rem;
+            }
+
+            .bottom-nav {
+                bottom: 12px;
+                width: calc(100% - 28px);
+                min-height: 76px;
+                padding: 10px 15px;
+                border-radius: 25px;
+            }
+
+            .nav-item { font-size: 0.65rem; }
+
+            .nav-item svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .location-button {
+                width: 61px;
+                height: 61px;
+                margin-top: -37px;
+            }
+
+            .location-button svg {
+                width: 25px;
+                height: 25px;
+            }
+
+            .location-nav { font-size: 0.65rem; }
+        }
+
+        @media (max-width: 350px) {
+            .assistant-banner { padding: 15px; }
+            .assistant-left { gap: 10px; }
+
+            .assistant-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            .assistant-text h2 { font-size: 0.9rem; }
+
+            .feature-card { padding: 12px; }
+            .feature-card h3 { font-size: 0.8rem; }
+            .feature-card p { font-size: 0.63rem; }
+
+            .location-button {
+                width: 56px;
+                height: 56px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="corner-tl" aria-hidden="true"></div>
+    <div class="corner-bl" aria-hidden="true"></div>
+    <div class="corner-br" aria-hidden="true"></div>
+
+    <div class="dashboard-container">
+        <div class="dashboard-content">
+
+            <header class="header">
+                <div class="profile">
+                    <div class="avatar" aria-label="Profile initials">GN</div>
+
+                    <div class="greeting">
+                        <span>Good morning,</span>
+                        <h1>Gogo Nana <span class="heart">♥</span></h1>
+                        <p class="date-text" id="current-date">Welcome to KHUMBULA</p>
+                    </div>
+                </div>
+
+                <button class="notification-button" type="button" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                        <path d="M10 21h4"/>
+                    </svg>
+                </button>
+            </header>
+
+            <a href="assistant.html" class="assistant-banner">
+                <div class="assistant-left">
+                    <div class="assistant-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3v18"/>
+                            <path d="M9 5.5a3 3 0 0 0-3 3v.5a3 3 0 0 0 0 6v.5a3 3 0 0 0 3 3"/>
+                            <path d="M15 5.5a3 3 0 0 1 3 3v.5a3 3 0 0 1 0 6v.5a3 3 0 0 1-3 3"/>
+                            <path d="M9 8h.01M15 8h.01M8 12h.01M16 12h.01M9 16h.01M15 16h.01"/>
+                        </svg>
+                    </div>
+
+                    <div class="assistant-text">
+                        <h2>Memory Assistant</h2>
+                        <p>Tap to ask something</p>
+                    </div>
+                </div>
+
+                <span class="assistant-arrow" aria-hidden="true">›</span>
+            </a>
+
+            <div class="section-heading">
+                <h2>Your everyday space</h2>
+                <p>Made for you</p>
+            </div>
+
+            <main class="feature-grid">
+
+                <a href="contacts.html" class="feature-card people-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h3>My People</h3>
+                        <p>Keep your favourite people close</p>
+                    </div>
+                    <span class="card-arrow">›</span>
+                </a>
+
+                <a href="reminders.html" class="feature-card day-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                                <path d="M16 3v4M8 3v4M3 10h18"/>
+                                <path d="m9 15 2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <h3>My Day</h3>
+                        <p>Remember your plans and daily tasks</p>
+                    </div>
+                    <span class="card-arrow">›</span>
+                </a>
+
+                <a href="diary.html" class="feature-card memories-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2"/>
+                                <path d="M8 4v16M12 9h5M12 13h5M12 17h3"/>
+                                <path d="M6 8h.01"/>
+                            </svg>
+                        </div>
+                        <h3>My Memories</h3>
+                        <p>Keep special moments and stories</p>
+                    </div>
+                    <span class="card-arrow">›</span>
+                </a>
+
+                <a href="shop.html" class="feature-card support-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
+                            </svg>
+                        </div>
+                        <h3>My Support</h3>
+                        <p>Find care, help and support</p>
+                    </div>
+                    <span class="card-arrow">›</span>
+                </a>
+
+            </main>
+        </div>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+
+        <a href="dashboard.html" class="nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 10 9-7 9 7"/>
+                <path d="M5 9v12h14V9"/>
+                <path d="M9 21v-7h6v7"/>
+            </svg>
+            <span>Home</span>
+        </a>
+
+        <a href="location.html" class="location-nav" aria-label="Open location">
+            <div class="location-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="2.5"/>
+                </svg>
+            </div>
+            <span class="location-label">Location</span>
+        </a>
+
+        <a href="reminders.html" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="3" width="14" height="18" rx="2"/>
+                <path d="M9 3v3M15 3v3M9 10h6M9 14h6M9 18h3"/>
+            </svg>
+            <span>Reminder</span>
+        </a>
+
+    </nav>
+
+    <script>
+        // Display the current date.
+        const dateElement = document.getElementById("current-date");
+
+        if (dateElement) {
+            const today = new Date();
+
+            dateElement.textContent = today.toLocaleDateString("en-ZA", {
+                weekday: "short",
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHUMBULA | My Day</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F7EBDD;
+            --background: #F8EDE1;
+            --card: #FFF8EF;
+            --terracotta: #C77B4D;
+            --terracotta-dark: #AD653F;
+            --caramel: #D08A5C;
+            --brown: #654331;
+            --dark-brown: #493126;
+            --olive: #85845B;
+            --olive-dark: #6F704B;
+            --sage: #DCE0CA;
+            --peach: #F1D8C5;
+            --text: #49382D;
+            --muted: #897565;
+            --border: #EBD9C8;
+            --deep-green: #294832;
+            --shadow: 0 8px 25px rgba(104, 68, 45, 0.08);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* CORNER DECORATIONS */
+
+        .corner-tl,
+        .corner-bl,
+        .corner-br {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .corner-tl {
+            top: 0;
+            left: 0;
+            width: 130px;
+            height: 130px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Cpath fill='%23C77B4D' d='M0 0h90C40 0 0 40 0 90z'/%3E%3Cpath fill='none' stroke='%23FFF8EF' stroke-width='3' stroke-linecap='round' d='M15 15l25 25M25 10l20 20M35 5l15 15'/%3E%3C/svg%3E");
+        }
+
+        .corner-bl {
+            bottom: 0;
+            left: 0;
+            width: 140px;
+            height: 140px;
+            background-position: bottom left;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Cpath fill='%2385845B' d='M0 160V80c30 0 60 20 60 50s-30 30-60 30z'/%3E%3Cpath fill='%236F704B' d='M20 160v-50c20 0 40 10 40 30s-20 20-40 20z'/%3E%3Cpath fill='%23C77B4D' d='M40 110c15-20 40-20 50-5-10 15-35 15-50 5z'/%3E%3C/svg%3E");
+        }
+
+        .corner-br {
+            bottom: 0;
+            right: 0;
+            width: 180px;
+            height: 180px;
+            background-position: bottom right;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath fill='%23C77B4D' d='M200 200H80c0-66 54-120 120-120z'/%3E%3Cpath fill='%2385845B' d='M200 200h-50c0-40 30-70 70-70z'/%3E%3Cpath fill='none' stroke='%23FFF8EF' stroke-width='4' d='M140 200l60-60M120 200l80-80M160 200l40-40'/%3E%3C/svg%3E");
+        }
+
+        /* PAGE LAYOUT */
+
+        .page-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1150px;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 45px clamp(20px, 5vw, 65px) 150px;
+        }
+
+        /* HEADER */
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            margin-bottom: 32px;
+        }
+
+        .back-button {
+            width: 46px;
+            height: 46px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--deep-green);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: var(--sage);
+            transform: translateX(-3px);
+        }
+
+        .back-button i {
+            font-size: 1rem;
+        }
+
+        .header-text span {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .header-text h1 {
+            color: var(--dark-brown);
+            font-size: clamp(1.35rem, 3vw, 1.8rem);
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        /* INTRODUCTION */
+
+        .intro {
+            margin-bottom: 25px;
+        }
+
+        .intro h2 {
+            font-size: clamp(1.35rem, 3vw, 1.8rem);
+            color: var(--brown);
+            margin-bottom: 7px;
+        }
+
+        .intro p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 600px;
+        }
+
+        .today-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 13px;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: #F1DCCB;
+            color: var(--brown);
+            font-size: 0.78rem;
+            font-weight: 500;
+        }
+
+        .today-date i {
+            color: var(--terracotta);
+        }
+
+        /* PROGRESS CARD */
+
+        .progress-card {
+            background: linear-gradient(115deg, #294832, #36583B);
+            border-radius: 24px;
+            padding: 25px 28px;
+            color: #FFF8EF;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 22px rgba(41, 72, 50, 0.15);
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .progress-top h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .progress-count {
+            font-size: 0.83rem;
+            color: #F1D8C5;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            border-radius: 20px;
+            background: rgba(255, 248, 239, 0.2);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 20px;
+            background: #E9C69D;
+            transition: width 0.35s ease;
+        }
+
+        .progress-caption {
+            margin-top: 13px;
+            font-size: 0.78rem;
+            color: rgba(255, 248, 239, 0.82);
+        }
+
+        /* GENTLE REMINDER */
+
+        .reminder-message {
+            display: none;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 18px 20px;
+            margin-bottom: 24px;
+            background: #F4E2D2;
+            border: 1px solid #E8C9AD;
+            border-radius: 19px;
+            animation: appear 0.3s ease;
+        }
+
+        .reminder-message.show {
+            display: flex;
+        }
+
+        .reminder-icon {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #E9C9AE;
+            color: var(--terracotta-dark);
+        }
+
+        .reminder-icon i {
+            font-size: 1rem;
+        }
+
+        .reminder-copy h3 {
+            color: var(--brown);
+            font-size: 0.92rem;
+            margin-bottom: 4px;
+        }
+
+        .reminder-copy p {
+            color: #806B5A;
+            font-size: 0.78rem;
+            line-height: 1.6;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(7px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* TASK SECTION */
+
+        .task-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 27px;
+            box-shadow: var(--shadow);
+            margin-bottom: 23px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            color: var(--brown);
+            font-size: 1.12rem;
+        }
+
+        .section-title span {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        /* ADD TASK */
+
+        .add-task-form {
+            display: flex;
+            gap: 11px;
+            margin-bottom: 22px;
+        }
+
+        .task-input {
+            flex: 1;
+            min-width: 0;
+            height: 52px;
+            padding: 0 17px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            outline: none;
+            background: #FFFCF7;
+            color: var(--text);
+            font-size: 0.85rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .task-input::placeholder {
+            color: #AA9888;
+        }
+
+        .task-input:focus {
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 3px rgba(199, 123, 77, 0.1);
+        }
+
+        .add-button {
+            height: 52px;
+            padding: 0 21px;
+            border: none;
+            border-radius: 15px;
+            background: var(--terracotta);
+            color: white;
+            font-size: 0.83rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .add-button:hover {
+            background: var(--terracotta-dark);
+            transform: translateY(-2px);
+        }
+
+        .add-button i {
+            font-size: 0.85rem;
+        }
+
+        /* TASK LIST */
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 15px 16px;
+            background: #FFF9F1;
+            border: 1px solid #F0E2D5;
+            border-radius: 16px;
+            transition: 0.2s ease;
+        }
+
+        .task-item:hover {
+            border-color: #DCC3AE;
+            transform: translateY(-1px);
+        }
+
+        .task-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            border: 2px solid #B6AA91;
+            border-radius: 7px;
+            background: white;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: 0.2s ease;
+        }
+
+        .task-checkbox:checked {
+            background: var(--deep-green);
+            border-color: var(--deep-green);
+        }
+
+        .task-checkbox:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .task-text {
+            flex: 1;
+            min-width: 0;
+            color: var(--text);
+            font-size: 0.86rem;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+            transition: 0.2s ease;
+        }
+
+        .task-item.completed .task-text {
+            color: #A99A8D;
+            text-decoration: line-through;
+            text-decoration-thickness: 1.5px;
+        }
+
+        .delete-task {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: #B79C89;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .delete-task:hover {
+            background: #F6E3D9;
+            color: #A64F3C;
+        }
+
+        .delete-task i {
+            font-size: 0.85rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px 15px;
+            color: var(--muted);
+        }
+
+        .empty-state-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 13px;
+            border-radius: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #E8EBDD;
+            color: var(--deep-green);
+            font-size: 1.35rem;
+        }
+
+        .empty-state h3 {
+            color: var(--brown);
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .empty-state p {
+            font-size: 0.78rem;
+            line-height: 1.6;
+        }
+
+        /* SMALL FOOTNOTE */
+
+        .gentle-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            text-align: center;
+            padding: 8px 10px;
+            color: var(--muted);
+            font-size: 0.76rem;
+        }
+
+        .gentle-note i {
+            color: var(--olive);
+        }
+
+        /* BOTTOM NAVIGATION */
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(520px, calc(100% - 36px));
+            min-height: 82px;
+            padding: 12px 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            justify-items: center;
+            background: rgba(255, 248, 239, 0.97);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            box-shadow: 0 10px 35px rgba(101, 67, 49, 0.14);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-decoration: none;
+            color: #9A8878;
+            font-size: 0.72rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.25rem;
+            color: var(--deep-green);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--deep-green);
+            font-weight: 700;
+        }
+
+        .nav-item:hover i {
+            transform: translateY(-2px);
+        }
+
+        .location-nav {
+            position: relative;
+            align-self: center;
+            justify-self: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: var(--deep-green);
+            font-size: 0.72rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .location-button {
+            width: 66px;
+            height: 66px;
+            margin-top: -42px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #D18A5C, #B96D45);
+            border: 5px solid var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 6px 18px rgba(175, 103, 62, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .location-button i {
+            font-size: 1.35rem;
+        }
+
+        .location-nav:hover .location-button {
+            transform: translateY(-4px);
+        }
+
+        .location-label {
+            margin-top: -2px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (min-width: 900px) {
+            .page-container {
+                padding-top: 55px;
+            }
+
+            .bottom-nav {
+                width: 460px;
+                min-height: 88px;
+                bottom: 30px;
+            }
+
+            .location-button {
+                width: 72px;
+                height: 72px;
+                margin-top: -48px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .page-container {
+                padding: 28px 17px 135px;
+            }
+
+            .page-header {
+                margin-bottom: 26px;
+            }
+
+            .task-section {
+                padding: 20px 16px;
+                border-radius: 21px;
+            }
+
+            .progress-card {
+                padding: 22px 20px;
+            }
+
+            .task-input {
+                height: 49px;
+                font-size: 0.78rem;
+            }
+
+            .add-button {
+                height: 49px;
+                padding: 0 15px;
+                font-size: 0.76rem;
+            }
+
+            .task-item {
+                padding: 13px 12px;
+            }
+
+            .task-text {
+                font-size: 0.8rem;
+            }
+
+            .bottom-nav {
+                bottom: 12px;
+                width: calc(100% - 28px);
+                min-height: 76px;
+                padding: 10px 15px;
+                border-radius: 25px;
+            }
+
+            .nav-item {
+                font-size: 0.65rem;
+            }
+
+            .nav-item i {
+                font-size: 1.15rem;
+            }
+
+            .location-button {
+                width: 61px;
+                height: 61px;
+                margin-top: -37px;
+            }
+
+            .location-nav {
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .add-task-form {
+                gap: 7px;
+            }
+
+            .add-button {
+                padding: 0 12px;
+            }
+
+            .add-button span {
+                display: none;
+            }
+
+            .add-button i {
+                font-size: 1rem;
+            }
+
+            .progress-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .reminder-message {
+                padding: 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- DECORATIVE CORNERS -->
+    <div class="corner-tl" aria-hidden="true"></div>
+    <div class="corner-bl" aria-hidden="true"></div>
+    <div class="corner-br" aria-hidden="true"></div>
+
+    <main class="page-container">
+
+        <!-- HEADER -->
+        <header class="page-header">
+            <a href="dashboard.html" class="back-button" aria-label="Back to dashboard">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
+            <div class="header-text">
+                <span>KHUMBULA</span>
+                <h1>My Day</h1>
+            </div>
+        </header>
+
+        <!-- INTRODUCTION -->
+        <section class="intro">
+            <h2>One thing at a time.</h2>
+            <p>
+                Keep track of the little things that make up your day.
+                Add your plans, tick them off and take your time.
+            </p>
+
+            <div class="today-date">
+                <i class="fa-regular fa-calendar"></i>
+                <span id="today-date">Today's date</span>
+            </div>
+        </section>
+
+        <!-- PROGRESS -->
+        <section class="progress-card" aria-label="Daily task progress">
+            <div class="progress-top">
+                <h3>Your daily progress</h3>
+                <span class="progress-count" id="progress-count">0 of 0 completed</span>
+            </div>
+
+            <div
+                class="progress-track"
+                role="progressbar"
+                aria-label="Tasks completed"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                id="progress-track"
+            >
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <p class="progress-caption" id="progress-caption">
+                Add a task to get started with your day.
+            </p>
+        </section>
+
+        <!-- GENTLE REMINDER -->
+        <section class="reminder-message" id="reminder-message" aria-live="polite">
+            <div class="reminder-icon">
+                <i class="fa-regular fa-bell"></i>
+            </div>
+
+            <div class="reminder-copy">
+                <h3 id="reminder-title">A gentle reminder</h3>
+                <p id="reminder-text">
+                    You still have a few things left on your list.
+                </p>
+            </div>
+        </section>
+
+        <!-- TASK LIST -->
+        <section class="task-section">
+
+            <div class="section-title">
+                <h2>My to-do list</h2>
+                <span id="task-total">0 tasks</span>
+            </div>
+
+            <form class="add-task-form" id="add-task-form">
+                <input
+                    type="text"
+                    class="task-input"
+                    id="task-input"
+                    placeholder="What would you like to remember?"
+                    maxlength="120"
+                    autocomplete="off"
+                    aria-label="Enter a task"
+                    required
+                >
+
+                <button type="submit" class="add-button">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add task</span>
+                </button>
+            </form>
+
+            <div class="task-list" id="task-list">
+
+                <!-- Tasks are added here by reminders.js -->
+
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+
+                    <h3>Your list is ready</h3>
+                    <p>Add something you'd like to remember doing today.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <p class="gentle-note">
+            <i class="fa-solid fa-heart"></i>
+            Every little step counts. Take your time.
+        </p>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav" aria-label="Main navigation">
+
+        <a href="dashboard.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+
+        <a href="location.html" class="location-nav" aria-label="Open location">
+            <div class="location-button">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <span class="location-label">Location</span>
+        </a>
+
+        <a href="reminders.html" class="nav-item active" aria-current="page">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span>Reminder</span>
+        </a>
+
+    </nav>
+
+    <script type="module" src="reminders.js"></script>
+
+</body>
+</html>

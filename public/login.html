@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khumbula | Login</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #F6EFE6;
+            color: #44352D;
+            min-height: 100vh;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 35px 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative shapes */
+        .decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: #C26638;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .decoration.top {
+            top: -65px;
+            left: -45px;
+            border-radius: 0 0 100% 0;
+        }
+
+        .decoration.bottom {
+            bottom: -75px;
+            right: -45px;
+            border-radius: 100% 0 0 0;
+            background: #85865B;
+        }
+
+        /* Login card */
+        .login-card {
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            z-index: 1;
+            background: #FFF8F0;
+            border: 1px solid #EAD8C8;
+            border-radius: 25px;
+            padding: 36px;
+            box-shadow: 0 15px 45px rgba(117, 69, 47, 0.12);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand h1 {
+            font-family: 'Playfair Display', serif;
+            color: #75452F;
+            font-size: clamp(2rem, 6vw, 2.7rem);
+            line-height: 1.2;
+            margin-bottom: 9px;
+        }
+
+        .brand p {
+            font-size: 0.87rem;
+            color: #806B53;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        label,
+        .section-label {
+            color: #75452F;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1.5px solid #DECBBB;
+            border-radius: 12px;
+            background: #FFFCF8;
+            color: #44352D;
+            font: inherit;
+            font-size: 0.92rem;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        input:focus {
+            border-color: #C26638;
+            box-shadow: 0 0 0 3px rgba(194, 102, 56, 0.12);
+        }
+
+        input::placeholder {
+            color: #B5A397;
+        }
+
+        /* Password */
+        .password-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+
+        .password-wrapper input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .toggle-button {
+            padding: 0 13px;
+            border: 1px solid #DECBBB;
+            border-radius: 12px;
+            background: #F3E5D8;
+            color: #75452F;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .toggle-button:hover {
+            background: #EAD5C3;
+        }
+
+        /* Language selection */
+        .language-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .language-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .language-option {
+            position: relative;
+            border: 1.5px solid #E3D2C3;
+            border-radius: 15px;
+            background: #FFFCF8;
+            padding: 15px 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 9px;
+            font-family: inherit;
+            color: #75452F;
+            transition: all 0.2s ease;
+        }
+
+        .language-option:hover {
+            border-color: #C26638;
+            transform: translateY(-2px);
+        }
+
+        .language-option.selected {
+            border-color: #C26638;
+            background: #F8E9DC;
+            box-shadow: 0 0 0 2px rgba(194, 102, 56, 0.10);
+        }
+
+        .language-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #F0DFD0;
+            color: #A85D37;
+        }
+
+        .language-option.selected .language-icon {
+            background: #C26638;
+            color: #FFF8F0;
+        }
+
+        .language-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .language-name {
+            font-size: 0.87rem;
+            font-weight: 600;
+        }
+
+        .language-description {
+            font-size: 0.7rem;
+            color: #927A68;
+            text-align: center;
+        }
+
+        .language-check {
+            position: absolute;
+            top: 9px;
+            right: 9px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #C26638;
+            color: white;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .language-option.selected .language-check {
+            display: flex;
+        }
+
+        .forgot-password {
+            align-self: flex-end;
+            color: #92715C;
+            text-decoration: none;
+            font-size: 0.82rem;
+            margin-top: -4px;
+        }
+
+        .forgot-password:hover {
+            color: #C26638;
+            text-decoration: underline;
+        }
+
+        /* Login button */
+        .primary-btn {
+            width: 100%;
+            border: none;
+            border-radius: 50px;
+            background: #C26638;
+            color: #FFF8F0;
+            padding: 14px 20px;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 3px;
+            transition: 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            background: #A9532E;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(194, 102, 56, 0.2);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            display: none;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 0.83rem;
+            overflow-wrap: anywhere;
+            line-height: 1.5;
+        }
+
+        .message:not(:empty) {
+            display: block;
+            background: #F3E5D8;
+            color: #75452F;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 28px 22px;
+            }
+
+            .language-option {
+                padding: 13px 7px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+
+        <div class="decoration top" aria-hidden="true"></div>
+        <div class="decoration bottom" aria-hidden="true"></div>
+
+        <section class="login-card">
+
+            <header class="brand">
+                <h1>Welcome Back</h1>
+                <p>A little help remembering, a little more freedom living.</p>
+            </header>
+
+            <form class="login-form" id="login-form">
+
+                <!-- Email -->
+                <div class="input-group">
+                    <label for="email">Email address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="username"
+                        required>
+                </div>
+
+                <!-- Password -->
+                <div class="input-group">
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="toggle-button"
+                            id="togglePassword"
+                            aria-label="Show password">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Language selection -->
+                <div class="language-section">
+
+                    <span class="section-label">Choose your language</span>
+
+                    <div class="language-options">
+
+                        <!-- English -->
+                        <button
+                            type="button"
+                            class="language-option selected"
+                            data-language="en"
+                            aria-pressed="true">
+
+                            <span class="language-check">✓</span>
+
+                            <span class="language-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M4 5h16v11H9l-5 4V5z"/>
+                                    <path d="M8 9h8M8 12h5"/>
+                                </svg>
+                            </span>
+
+                            <span class="language-name">English</span>
+                            <span class="language-description">Continue in English</span>
+                        </button>
+
+                        <!-- IsiZulu -->
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="zu"
+                            aria-pressed="false">
+
+                            <span class="language-check">✓</span>
+
+                            <span class="language-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M4 5h16v11H9l-5 4V5z"/>
+                                    <path d="M8 9h8M8 12h5"/>
+                                    <path d="M16 14l2 2"/>
+                                </svg>
+                            </span>
+
+                            <span class="language-name">IsiZulu</span>
+                            <span class="language-description">Qhubeka ngesiZulu</span>
+                        </button>
+
+                    </div>
+
+                    <input
+                        type="hidden"
+                        id="selected-language"
+                        name="language"
+                        value="en">
+
+                </div>
+
+                <!-- Forgot password -->
+                <a href="#" class="forgot-password" id="forgot-password">
+                    Forgot Password?
+                </a>
+
+                <!-- Login message -->
+                <p
+                    id="login-message"
+                    class="message"
+                    role="status"
+                    aria-live="polite">
+                </p>
+
+                <!-- Login -->
+                <button
+                    type="submit"
+                    class="primary-btn"
+                    id="login-button">
+                    Log In
+                </button>
+
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Show / hide password
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        togglePassword.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+
+            passwordInput.type = isPassword ? "text" : "password";
+            togglePassword.textContent = isPassword ? "Hide" : "Show";
+            togglePassword.setAttribute(
+                "aria-label",
+                isPassword ? "Hide password" : "Show password"
+            );
+        });
+
+        // Language selection
+        const languageOptions = document.querySelectorAll(".language-option");
+        const selectedLanguage = document.getElementById("selected-language");
+
+        languageOptions.forEach(option => {
+            option.addEventListener("click", () => {
+                languageOptions.forEach(item => {
+                    item.classList.remove("selected");
+                    item.setAttribute("aria-pressed", "false");
+                });
+
+                option.classList.add("selected");
+                option.setAttribute("aria-pressed", "true");
+
+                selectedLanguage.value = option.dataset.language;
+            });
+        });
+    </script>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
